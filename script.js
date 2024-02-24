@@ -34,14 +34,12 @@ const success = (api) => {
    })
 }
 
-
-
-
-
 var iframe = document.getElementById( 'api-frame' );
 var version = '1.12.1';
 var client = new Sketchfab( version, iframe );
 
+// Sketchfab unique identifier (UID)
+// Replace for other models
 var uid = '271bd5c6d9854fe6997f8a31475e9d2c';
 
   client.init(uid, {
