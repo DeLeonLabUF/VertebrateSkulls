@@ -34,7 +34,7 @@ const success = (api) => {
    })
 }
 
-var iframe = document.getElementById( 'api-frame' );
+var iframe = document.getElementById( 'api-frame-dog' );
 var version = '1.12.1';
 var client = new Sketchfab( version, iframe );
 
