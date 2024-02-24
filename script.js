@@ -58,6 +58,5 @@ const addClickEvent = (api, hideshow, iframeID) => {
 
 var version = '1.12.1';
 
-initializeSketchfab('271bd5c6d9854fe6997f8a31475e9d2c', 'api-frame-dog');
-initializeSketchfab('423318aa8fd14782976d528fd8e2a5d0', 'api-frame-other');
-
+initializeSketchfab('271bd5c6d9854fe6997f8a31475e9d2c', 'api-frame-dog', 'Calotte_v6_2');
+initializeSketchfab('423318aa8fd14782976d528fd8e2a5d0', 'api-frame-other', null);
