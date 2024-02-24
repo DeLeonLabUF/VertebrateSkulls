@@ -34,9 +34,12 @@ const success = (api) => {
    })
 }
 
+var version = '1.12.1';
+
+// For each model, need to name an iframe and a client
 var iframe-dog = document.getElementById( 'api-frame-dog' );
 var iframe-other = document.getElementById( 'api-frame-other' );
-var version = '1.12.1';
+
 var client-dog = new Sketchfab( version, iframe-dog );
 var client-other = new Sketchfab( version, iframe-other );
 
@@ -44,6 +47,7 @@ var client-other = new Sketchfab( version, iframe-other );
 // Replace for other models
 var uid-dog = '271bd5c6d9854fe6997f8a31475e9d2c';
 
+// For each model, need to intialize the client
   client-dog.init(uid-dog, {
     success: success,
     //  error: () => console.error("Sketchfab API error"),
