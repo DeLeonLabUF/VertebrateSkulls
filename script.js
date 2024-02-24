@@ -34,15 +34,17 @@ const success = (api) => {
    })
 }
 
-var iframe = document.getElementById( 'api-frame-dog' );
+var iframe-dog = document.getElementById( 'api-frame-dog' );
+var iframe-other = document.getElementById( 'api-frame-other' );
 var version = '1.12.1';
-var client = new Sketchfab( version, iframe );
+var client-dog = new Sketchfab( version, iframe-dog );
+var client-other = new Sketchfab( version, iframe-other );
 
 // Sketchfab unique identifier (UID)
 // Replace for other models
-var uid = '271bd5c6d9854fe6997f8a31475e9d2c';
+var uid-dog = '271bd5c6d9854fe6997f8a31475e9d2c';
 
-  client.init(uid, {
+  client-dog.init(uid-dog, {
     success: success,
     //  error: () => console.error("Sketchfab API error"),
     ui_stop: 0,
