@@ -1,12 +1,12 @@
 //Define a function to initialize each window
-function initializeSketchfab(uid, iframeId) {
-    var iframe = document.getElementById(iframeId);
-    var version = '1.12.1';
-    var client = new Sketchfab(version, iframe);
+function initializeSketchfab(uid, iframeId, modelName) {
+    const iframe = document.getElementById(iframeId);
+    const version = '1.12.1';
+    const client = new Sketchfab(version, iframe);
 
     client.init(uid, {
         success: function(api) {
-            success(api, iframeId); // Pass iframeId to the success function
+            success(api, iframeId, modelName); // Pass modelName to the success function
         },
         error: function(error) {
             console.error("Sketchfab API error:", error);
@@ -18,21 +18,24 @@ function initializeSketchfab(uid, iframeId) {
 }
 
 // Define a function for successful load
-function success(api, iframeId) {
-  // Tell the api to load the 3D model
-  api.start();
-  api.addEventListener("viewerready", function () {
-    // List objects
-    api.getNodeMap(function (err, nodes) {
-      // console.log(nodes);
-      // hideshow is the variable created to store the piece gets toggled
-      // Replace the name for other models
-      const hideshow = Object.values(nodes).find((node) => node.name === "Calotte_v6_2");
-      console.log(hideshow);
-      addClickEvent(api, hideshow.instanceID);
-    })                     
-   })
+function success(api, iframeId, modelName) {
+    api.start();
+    api.addEventListener("viewerready", function () {
+        // List objects
+        api.getNodeMap(function (err, nodes) {
+            console.log(nodes);
+            let hideshow;
+            if (modelName !== null) {
+                hideshow = Object.values(nodes).find((node) => node.name === modelName);
+            } else {
+                hideshow = null;
+            }
+            console.log(hideshow);
+            addClickEvent(api, hideshow.instanceID);
+        });
+    });
 }
+
 
 //Define a function on click
 const addClickEvent = (api, hideshow, iframeID) => {
