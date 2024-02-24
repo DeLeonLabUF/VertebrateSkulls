@@ -46,7 +46,7 @@ var uid = '271bd5c6d9854fe6997f8a31475e9d2c';
 
   client.init(uid, {
     success: success,
-    error: () => console.error("Sketchfab API error"),
+    //  error: () => console.error("Sketchfab API error"),
     ui_stop: 0,
     preload: 1,
     camera: 0
