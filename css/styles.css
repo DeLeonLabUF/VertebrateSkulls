@@ -1,102 +1,140 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    background-color: #333;
-    padding: 10px;
-    text-align: left;
-}
-
-.logo img {
-    max-height: 50px;
-    max-width: 100%;
-}
-
-h1 {
-    margin: 0;
-}
-
-.container {
-    display: flex;
-}
-
-.navigation {
-    background-color: #555;
-    padding: 20px;
-}
-
-.navigation ul {
-    list-style: none;
-    padding: 0;
-}
-
-.navigation li {
-    margin-bottom: 10px;
-}
-
-.navigation a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.navigation a.active,
-.sidebar a.active {
-  background-color: #777;   /* highlight color */
+/* ============================
+   Global Styles
+============================ */
+body, html {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
   color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+/* ============================
+   Header and Navigation
+============================ */
+header {
+  background-color: #333;
+  color: #fff;
+  border-bottom: 2px solid #555;
+  padding: 10px 20px;
+}
+
+/* Flex row: logo/title on left, nav on right */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Logo and title area */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-title img {
+  max-height: 60px;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.title h2 {
+  margin: 0;
+  font-size: 1em;
+  font-weight: normal;
+  color: #ccc;
+}
+
+/* Navigation bar */
+.navbar {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 6px 10px;
   border-radius: 4px;
-  padding: 5px 10px;
+  transition: background 0.3s;
 }
 
+.navbar a:hover,
+.navbar a.active {
+  background-color: #777;
+}
 
+/* Responsive: stack vertically on small screens */
+@media (max-width: 700px) {
+  .header-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .navbar {
+    justify-content: center;
+  }
+}
+
+/* ============================
+   Main Content Area
+============================ */
 .main-content {
-    padding: 20px;
+  padding: 20px;
+  display: block;
+  color: #fff;
 }
-/* --- Component Layout Styles --- */
 
-/* Each component section (text + iframe pair) */
+/* ============================
+   Component Layout
+============================ */
+
+/* Each component section */
 .component {
   margin-bottom: 2em;
 }
 
-/* Flexbox layout for each component's inner structure */
+/* Flex layout for text + media */
 .component-content {
   display: flex;
-  flex-wrap: wrap;          /* allows stacking on smaller screens */
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 1em;
 }
 
-/* Text and media halves */
 .text,
 .media {
-  flex: 1 1 50%;            /* each takes ~half width */
-  min-width: 320px;         /* prevents too-narrow columns */
+  flex: 1 1 50%;
+  min-width: 320px;
 }
 
-/* Iframe appearance */
-iframe {
+/* Image or iframe inside media */
+.media img,
+.media iframe {
   width: 100%;
-  aspect-ratio: 16 / 9;     /* responsive 16:9 ratio */
-  border: 1px solid #888;
+  height: auto;
   border-radius: 6px;
+  border: 1px solid #888;
 }
 
-/* Caption under iframe */
-figcaption {
+/* Caption styling */
+.media figcaption {
   text-align: center;
   font-size: 0.9em;
   color: #ccc;
   margin-top: 0.5em;
 }
 
-/* Responsive rule: stack vertically on narrow screens */
+/* Stack text and media vertically on narrow screens */
 @media (max-width: 800px) {
   .text,
   .media {
@@ -104,87 +142,16 @@ figcaption {
   }
 }
 
-/* ===== Force Component Flex Layout ===== */
-.component-content {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 1em;
-  border: 2px dashed rgba(255,255,255,0.3); /* temporary visual debug */
+/* ============================
+   Optional Visual Touches
+============================ */
+
+/* Add subtle separation between header and main content */
+header {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-.text, .media {
-  flex: 1 1 50%;
-  min-width: 320px;
-  border: 1px solid rgba(255,255,255,0.2); /* debug borders */
+/* Smooth link hover transitions */
+a {
+  transition: color 0.3s, background-color 0.3s;
 }
-
-/* ===== FORCE FLEX LAYOUT FOR COMPONENTS ===== */
-section.component > .component-content {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 1em;
-}
-
-section.component > .component-content > .text,
-section.component > .component-content > .media {
-  flex: 1 1 50%;
-  min-width: 320px;
-}
-
-section.component > .component-content > .media img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid #888;
-}
-
-section.component > .component-content > .media figcaption {
-  text-align: center;
-  font-size: 0.9em;
-  color: #ccc;
-  margin-top: 0.5em;
-}
-
-@media (max-width: 800px) {
-  section.component > .component-content > .text,
-  section.component > .component-content > .media {
-    flex: 1 1 100%;
-  }
-}
-
-/* Make sure the container behaves as a horizontal split */
-.container {
-  display: flex;
-  flex-direction: row;   /* side-by-side nav and main */
-  height: 100vh;         /* optional: fill viewport vertically */
-}
-
-/* Give the nav a fixed width, and let main content expand */
-.navigation {
-  width: 220px;          /* or whatever width you want */
-  flex-shrink: 0;
-}
-
-/* Main content takes all remaining horizontal space */
-.main-content {
-  flex: 1;
-  display: block;        /* ensure it doesn’t behave as a flex parent */
-  padding: 20px;
-  overflow-y: auto;
-}
-
-/* Ensure component layout works inside main-content */
-.component-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 1em;
-}
-
-.text, .media {
-  flex: 1 1 50%;
-  min-width: 320px;
-}
-
