@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.logo img {
+    max-height: 50px;
+    max-width: 100%;
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+}
+
+.navigation {
+    background-color: #555;
+    padding: 20px;
+}
+
+.navigation ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navigation li {
+    margin-bottom: 10px;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.main-content {
+    padding: 20px;
+}
+/* --- Component Layout Styles --- */
+
+/* Each component section (text + iframe pair) */
+.component {
+  margin-bottom: 2em;
+}
+
+/* Flexbox layout for each component's inner structure */
+.component-content {
+  display: flex;
+  flex-wrap: wrap;          /* allows stacking on smaller screens */
+  align-items: flex-start;
+  gap: 1em;
+}
+
+/* Text and media halves */
+.text,
+.media {
+  flex: 1 1 50%;            /* each takes ~half width */
+  min-width: 320px;         /* prevents too-narrow columns */
+}
+
+/* Iframe appearance */
+iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;     /* responsive 16:9 ratio */
+  border: 1px solid #888;
+  border-radius: 6px;
+}
+
+/* Caption under iframe */
+figcaption {
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 0.5em;
+}
+
+/* Responsive rule: stack vertically on narrow screens */
+@media (max-width: 800px) {
+  .text,
+  .media {
+    flex: 1 1 100%;
+  }
+}
+
