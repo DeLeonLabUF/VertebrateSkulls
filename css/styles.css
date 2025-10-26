@@ -33,6 +33,15 @@ header h2 {
   font-weight: normal;
 }
 
+.logo {
+  display: block;
+  max-height: 60px;     /* uniform maximum height */
+  height: auto;         /* keeps proportions */
+  width: auto;          /* prevents stretching */
+  margin: 0;            /* remove unexpected spacing */
+  padding: 0;
+}
+
 /* ============================
    Page Layout (Sidebar + Main)
 ============================ */
@@ -44,13 +53,16 @@ header h2 {
 
 /* ----- Sidebar Navigation ----- */
 .navigation {
-  width: max-content;           /* auto-size to widest link */
-  min-width: 160px;             /* keep reasonable minimum */
+  position: sticky;        /* <— makes it stick in place */
+  top: 0;                  /* distance from the top of the viewport */
+  height: 100vh;           /* full viewport height */
+  overflow-y: auto;        /* allows scrolling if sidebar content is long */
+  width: max-content;      /* keep compact width */
+  min-width: 160px;
   background-color: #222;
   padding: 15px;
   flex-shrink: 0;
   border-right: 2px solid #444;
-  overflow-y: auto;
   box-sizing: border-box;
 }
 

@@ -55,7 +55,8 @@ const addClickEvent = (api, hideshow, iframeID) => {
 
 var version = '1.12.1';
 
-initializeSketchfab('271bd5c6d9854fe6997f8a31475e9d2c', 'api-frame-dog', 'Calotte_v6_2');
-initializeSketchfab('423318aa8fd14782976d528fd8e2a5d0', 'api-frame-other', null);
+initializeSketchfab('53e9657729b34a269111b30933d42d94', 'DWA-Aotus1_Taxon', 'Calotte');
+initializeSketchfab('5b7c7e9cfe23451984260433a64384f9', 'Aotus107_Taxon', 'Calotte');
+initializeSketchfab('d4e239842d2d45e89ece58016578e4d7', 'Aotus108_Taxon', 'Calotte');
 
 // Author: Valerie Burke DeLeon using codepen.io; I am grateful to the Sketchfab Developer Team and the video tutorial by Klaas Nienhuis (https://www.klaasnienhuis.nl) on YouTube (https://www.youtube.com/live/mVQNDCwbXMM)!
