@@ -119,4 +119,39 @@ figcaption {
   border: 1px solid rgba(255,255,255,0.2); /* debug borders */
 }
 
+/* ===== FORCE FLEX LAYOUT FOR COMPONENTS ===== */
+section.component > .component-content {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+section.component > .component-content > .text,
+section.component > .component-content > .media {
+  flex: 1 1 50%;
+  min-width: 320px;
+}
+
+section.component > .component-content > .media img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #888;
+}
+
+section.component > .component-content > .media figcaption {
+  text-align: center;
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 0.5em;
+}
+
+@media (max-width: 800px) {
+  section.component > .component-content > .text,
+  section.component > .component-content > .media {
+    flex: 1 1 100%;
+  }
+}
+
 
