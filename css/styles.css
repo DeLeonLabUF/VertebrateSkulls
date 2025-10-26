@@ -46,6 +46,15 @@ h1 {
     font-size: 18px;
 }
 
+.navigation a.active,
+.sidebar a.active {
+  background-color: #777;   /* highlight color */
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+
+
 .main-content {
     padding: 20px;
 }
