@@ -44,12 +44,14 @@ header h2 {
 
 /* ----- Sidebar Navigation ----- */
 .navigation {
-  width: 240px;
+  width: max-content;           /* auto-size to widest link */
+  min-width: 160px;             /* keep reasonable minimum */
   background-color: #222;
-  padding: 20px;
+  padding: 15px;
   flex-shrink: 0;
   border-right: 2px solid #444;
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .navigation ul {
@@ -59,7 +61,8 @@ header h2 {
 }
 
 .navigation li {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  position: relative;
 }
 
 .navigation a {
@@ -67,15 +70,41 @@ header h2 {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
-  font-size: 16px;
-  padding: 8px 10px;
+  font-size: 15px;
+  padding: 6px 10px;
   border-radius: 4px;
   transition: background 0.3s;
+  white-space: nowrap;          /* prevents wrapping onto multiple lines */
 }
 
 .navigation a:hover,
 .navigation a.active {
   background-color: #777;
+}
+
+/* ----- Submenu Styles ----- */
+.navigation ul.submenu {
+  display: none;                /* hidden by default */
+  margin-left: 10px;
+  margin-top: 5px;
+  border-left: 2px solid #444;
+  padding-left: 10px;
+}
+
+.navigation li:hover > ul.submenu {
+  display: block;               /* show on hover */
+}
+
+.navigation ul.submenu a {
+  font-weight: normal;
+  font-size: 14px;
+  padding: 4px 10px;
+  color: #ccc;
+}
+
+.navigation ul.submenu a:hover {
+  background-color: #555;
+  color: #fff;
 }
 
 /* ----- Main Content Area ----- */
@@ -136,6 +165,8 @@ header h2 {
     flex: 1 1 100%;
   }
 }
+
+
 
 /* ============================
    Minor Visual Touches
