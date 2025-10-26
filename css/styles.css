@@ -4,106 +4,94 @@
 body, html {
   margin: 0;
   padding: 0;
+  height: 100%;
   background-color: #000;
   color: #fff;
   font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 /* ============================
-   Header and Navigation
+   Header
 ============================ */
 header {
   background-color: #333;
   color: #fff;
-  border-bottom: 2px solid #555;
   padding: 10px 20px;
+  border-bottom: 2px solid #555;
 }
 
-/* Flex row: logo/title on left, nav on right */
-.header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-/* Logo and title area */
-.logo-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-title img {
-  max-height: 60px;
-}
-
-.title h1 {
+header h1 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
-.title h2 {
+header h2 {
   margin: 0;
   font-size: 1em;
-  font-weight: normal;
   color: #ccc;
+  font-weight: normal;
 }
 
-/* Navigation bar */
-.navbar {
+/* ============================
+   Page Layout (Sidebar + Main)
+============================ */
+.container {
   display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
+  flex-direction: row;
+  height: calc(100vh - 80px); /* full height minus header */
 }
 
-.navbar a {
+/* ----- Sidebar Navigation ----- */
+.navigation {
+  width: 240px;
+  background-color: #222;
+  padding: 20px;
+  flex-shrink: 0;
+  border-right: 2px solid #444;
+  overflow-y: auto;
+}
+
+.navigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation li {
+  margin-bottom: 10px;
+}
+
+.navigation a {
+  display: block;
   text-decoration: none;
   color: #fff;
   font-weight: bold;
   font-size: 16px;
-  padding: 6px 10px;
+  padding: 8px 10px;
   border-radius: 4px;
   transition: background 0.3s;
 }
 
-.navbar a:hover,
-.navbar a.active {
+.navigation a:hover,
+.navigation a.active {
   background-color: #777;
 }
 
-/* Responsive: stack vertically on small screens */
-@media (max-width: 700px) {
-  .header-row {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .navbar {
-    justify-content: center;
-  }
-}
-
-/* ============================
-   Main Content Area
-============================ */
+/* ----- Main Content Area ----- */
 .main-content {
+  flex: 1;
   padding: 20px;
-  display: block;
-  color: #fff;
+  overflow-y: auto;
 }
 
 /* ============================
    Component Layout
 ============================ */
-
-/* Each component section */
 .component {
   margin-bottom: 2em;
 }
 
-/* Flex layout for text + media */
 .component-content {
   display: flex;
   flex-wrap: wrap;
@@ -111,13 +99,12 @@ header {
   gap: 1em;
 }
 
-.text,
-.media {
+/* Text and media halves */
+.text, .media {
   flex: 1 1 50%;
   min-width: 320px;
 }
 
-/* Image or iframe inside media */
 .media img,
 .media iframe {
   width: 100%;
@@ -126,7 +113,6 @@ header {
   border: 1px solid #888;
 }
 
-/* Caption styling */
 .media figcaption {
   text-align: center;
   font-size: 0.9em;
@@ -134,24 +120,30 @@ header {
   margin-top: 0.5em;
 }
 
-/* Stack text and media vertically on narrow screens */
+/* Stack vertically on narrow screens */
 @media (max-width: 800px) {
-  .text,
-  .media {
+  .container {
+    flex-direction: column;
+  }
+
+  .navigation {
+    width: 100%;
+    border-right: none;
+    border-bottom: 2px solid #444;
+  }
+
+  .text, .media {
     flex: 1 1 100%;
   }
 }
 
 /* ============================
-   Optional Visual Touches
+   Minor Visual Touches
 ============================ */
-
-/* Add subtle separation between header and main content */
-header {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-}
-
-/* Smooth link hover transitions */
 a {
   transition: color 0.3s, background-color 0.3s;
+}
+
+header {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
