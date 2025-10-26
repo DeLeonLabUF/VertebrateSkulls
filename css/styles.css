@@ -154,4 +154,37 @@ section.component > .component-content > .media figcaption {
   }
 }
 
+/* Make sure the container behaves as a horizontal split */
+.container {
+  display: flex;
+  flex-direction: row;   /* side-by-side nav and main */
+  height: 100vh;         /* optional: fill viewport vertically */
+}
+
+/* Give the nav a fixed width, and let main content expand */
+.navigation {
+  width: 220px;          /* or whatever width you want */
+  flex-shrink: 0;
+}
+
+/* Main content takes all remaining horizontal space */
+.main-content {
+  flex: 1;
+  display: block;        /* ensure it doesn’t behave as a flex parent */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Ensure component layout works inside main-content */
+.component-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.text, .media {
+  flex: 1 1 50%;
+  min-width: 320px;
+}
 
