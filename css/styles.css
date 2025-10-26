@@ -104,3 +104,19 @@ figcaption {
   }
 }
 
+/* ===== Force Component Flex Layout ===== */
+.component-content {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1em;
+  border: 2px dashed rgba(255,255,255,0.3); /* temporary visual debug */
+}
+
+.text, .media {
+  flex: 1 1 50%;
+  min-width: 320px;
+  border: 1px solid rgba(255,255,255,0.2); /* debug borders */
+}
+
+
