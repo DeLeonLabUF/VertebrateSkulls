@@ -57,17 +57,17 @@ header {
 .container {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 80px); /* full height minus header */
+  min-height: calc(100vh - 80px);  /* fits under header */
+  width: 100%;
 }
 
 /* ----- Sidebar Navigation ----- */
 .navigation {
-  position: sticky;        /* <— makes it stick in place */
-  top: 0;                  /* distance from the top of the viewport */
-  height: 100vh;           /* full viewport height */
-  overflow-y: auto;        /* allows scrolling if sidebar content is long */
-  width: max-content;      /* keep compact width */
-  min-width: 160px;
+  position: sticky;
+  top: 80px;                /* sit below header */
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  width: 200px;             /* fixed, predictable width */
   background-color: #222;
   padding: 15px;
   flex-shrink: 0;
@@ -131,10 +131,12 @@ header {
 /* ----- Main Content Area ----- */
 .main-content {
   flex: 1;
+  width: calc(100% - 200px); /* ensure it fills remaining space */
   padding: 20px;
   overflow-y: auto;
+  display: block;
+  box-sizing: border-box;
 }
-
 /* ============================
    Component Layout
 ============================ */
