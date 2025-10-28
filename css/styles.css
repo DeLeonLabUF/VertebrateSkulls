@@ -175,6 +175,9 @@ header {
   height: auto;
   border-radius: 6px;
   border: 1px solid #888;
+  display: block;
+  flex-shrink: 0;         /* prevents flex compression */
+  object-fit: contain;
 }
 
 .media figcaption {
