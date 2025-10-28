@@ -48,50 +48,43 @@ function logAllNodes(api, modelName = "") {
   });
 }
 
-/**
- * Logs and returns mesh nodes (actual geometry) in the Sketchfab model.
- * Ignores transforms, lights, and cameras.
- */
 function logMeshNodes(api, modelName = "") {
   return new Promise((resolve) => {
     api.getNodeMap((err, nodes) => {
       if (err) {
         console.error("Error getting node map:", err);
-        resolve([]); // Return empty array on error
+        resolve([]);
         return;
       }
 
       const nodeArray = Object.values(nodes);
 
-      // Keep only named geometry nodes
-      const meshNodes = nodeArray.filter(
-        (node) => node.type === "Geometry" && node.name
-      );
+      // Keep all nodes that have a name (ignore internal transforms)
+      const meshNodes = nodeArray.filter((node) => node.name);
 
       if (meshNodes.length === 0) {
-        console.warn(`⚠️ No mesh nodes found in model '${modelName}'.`);
-        resolve([]); // Return empty array if none
+        console.warn(`⚠️ No named nodes found in model '${modelName}'.`);
+        resolve([]);
         return;
       }
 
-      console.group(`🦴 Mesh Nodes in model: ${modelName}`);
+      console.group(`🦴 Named Nodes in model: ${modelName}`);
       meshNodes.forEach((node) =>
         console.log(
-          `${node.name} (instanceID: ${node.instanceID}, parentID: ${node.parentID})`
+          `${node.name} (type: ${node.type}, instanceID: ${node.instanceID}, parentID: ${node.parentID})`
         )
       );
       console.groupEnd();
 
       console.log(
-        `✅ Found ${meshNodes.length} named mesh nodes (out of ${
-          nodeArray.length
-        } total nodes).`
+        `✅ Found ${meshNodes.length} named nodes (out of ${nodeArray.length} total nodes).`
       );
 
-      resolve(meshNodes); // Return the filtered list
+      resolve(meshNodes);
     });
   });
 }
+
 
 /* ====== SUCCESS HANDLER ====== */
 
