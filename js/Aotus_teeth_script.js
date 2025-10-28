@@ -40,6 +40,7 @@ function initializeSketchfab(uid, iframeId, modelName = "") {
 
 function success(api, iframeId, modelName) {
   api.start();
+  window.api = api;
   api.addEventListener("viewerready", function () {
     console.log(`Viewer ready for model: ${modelName}`);
 
