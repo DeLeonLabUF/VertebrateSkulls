@@ -1,74 +1,101 @@
-//Define function to initialize each model window
-function initializeSketchfab(uid, iframeId, modelName) {
-    const iframe = document.getElementById(iframeId);
-    const version = '1.12.1';
-    const client = new Sketchfab(version, iframe);
+/**************************************************************
+ * Sketchfab Initialization Script (Multi-node Aware)
+ **************************************************************/
 
-    client.init(uid, {
-        success: function(api) {
-            success(api, iframeId, modelName); // Pass modelName to the success function
-        },
-        error: function(error) {
-            console.error("Sketchfab API error:", error);
-        },
-        ui_stop: 0,
-        preload: 1,
-        camera: 0
-    });
+/* ====== CONFIGURATION (CHOOSE NODES) ====== */
+
+// List of node names to control in each model.
+// Add or remove names here as needed.
+const TARGET_NODE_NAMES = ["Mandible", "CranialBase"];
+
+// Sketchfab API version
+const VERSION = "1.12.1";
+
+
+/* ====== MAIN INITIALIZATION ====== */
+
+function initializeSketchfab(uid, iframeId, modelName = "") {
+  const iframe = document.getElementById(iframeId);
+  const client = new Sketchfab(VERSION, iframe);
+
+  client.init(uid, {
+    success: function (api) {
+      success(api, iframeId, modelName);
+    },
+    error: function (error) {
+      console.error("Sketchfab API error:", error);
+    },
+    ui_stop: 0,
+    preload: 1,
+    camera: 0,
+  });
 }
 
-// Define a function for successful load
+/* ====== SUCCESS HANDLER ====== */
+
 function success(api, iframeId, modelName) {
-    api.start();
-    api.addEventListener("viewerready", function () {
-        // List objects
-        api.getNodeMap(function (err, nodes) {
-            if (err) {
-            console.error("Error getting node map:", err);
-            return;
-              }
-
-      // Try to find the named node first
-      let hideshow = Object.values(nodes).find((node) => node.name === "Calotte");
-
-      // If not found, fall back to the root node (usually the first in the list)
-      if (!hideshow) {
-        hideshow = Object.values(nodes).find((node) => node.parentID === -1);
-        console.warn("Target node 'Calotte' not found. Using root node:", hideshow.name);
-      }
-
-      if (!hideshow) {
-        console.error("No valid node found to toggle visibility.");
+  api.start();
+  api.addEventListener("viewerready", function () {
+    api.getNodeMap(function (err, nodes) {
+      if (err) {
+        console.error("Error getting node map:", err);
         return;
       }
 
-      addClickEvent(api, hideshow.instanceID);
+      // Convert nodes object to an array for easier filtering
+      const nodeArray = Object.values(nodes);
+
+      // Find all nodes whose names match any of the TARGET_NODE_NAMES
+      let hideshowNodes = nodeArray.filter((node) =>
+        TARGET_NODE_NAMES.includes(node.name)
+      );
+
+      // Fallback: if no matching nodes found, use root node (parentID = -1)
+      if (hideshowNodes.length === 0) {
+        const rootNode = nodeArray.find((node) => node.parentID === -1);
+        if (rootNode) {
+          console.warn(
+            `No target nodes (${TARGET_NODE_NAMES.join(
+              ", "
+            )}) found in model '${modelName}'. Using root node: ${rootNode.name}`
+          );
+          hideshowNodes = [rootNode];
+        } else {
+          console.error("No valid nodes found in model:", modelName);
+          return;
+        }
+      }
+
+      // Add click event to toggle visibility for all found nodes
+      const nodeIDs = hideshowNodes.map((n) => n.instanceID);
+      addClickEvent(api, nodeIDs);
     });
   });
 }
 
+/* ====== CLICK HANDLER ====== */
 
-//Define a function on click
-const addClickEvent = (api, hideshowID) => {
+function addClickEvent(api, nodeIDs) {
   let isVisible = true;
+
   api.addEventListener(
     "click",
-    function (info) {
+    function () {
       if (isVisible) {
-        api.hide(hideshowID);
+        nodeIDs.forEach((id) => api.hide(id));
       } else {
-        api.show(hideshowID);
+        nodeIDs.forEach((id) => api.show(id));
       }
       isVisible = !isVisible;
     },
     { pick: "fast" }
   );
-};
+}
 
-var version = '1.12.1';
+/* ====== MODEL INITIALIZATIONS ====== */
 
-initializeSketchfab('6920446710f64de3a6621ac766255d16', 'DWA-Aotus1_Teeth', '');
-initializeSketchfab('9fb6cf5aac834deeac18c92e50cf9259', 'Aotus107_Teeth', '');
-initializeSketchfab('f5696596b5bc4338ba1b21a49ee1955e', 'Aotus108_Teeth', '');
+initializeSketchfab("6920446710f64de3a6621ac766255d16", "DWA-Aotus1_Teeth", "Aotus1");
+initializeSketchfab("9fb6cf5aac834deeac18c92e50cf9259", "Aotus107_Teeth", "Aotus107");
+initializeSketchfab("f5696596b5bc4338ba1b21a49ee1955e", "Aotus108_Teeth", "Aotus108");
 
 // Author: Valerie Burke DeLeon using codepen.io; I am grateful to the Sketchfab Developer Team and the video tutorial by Klaas Nienhuis (https://www.klaasnienhuis.nl) on YouTube (https://www.youtube.com/live/mVQNDCwbXMM)!
