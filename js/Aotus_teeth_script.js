@@ -164,7 +164,7 @@ function addClickEvent(api, nodeIDs) {
         // Step 1️⃣ → make semi-transparent
         if (visibilityState === 0) {
           materials.forEach((mat) => {
-            mat.opacity = 0.1;              // 10 % visible
+            mat.opacity = 0.03;              // 3 % visible
             mat.transparent = true;         // enable alpha blending
             mat.blending = "BLENDING_NORMAL";
             mat.depthWrite = false;         // prevent z-fighting
