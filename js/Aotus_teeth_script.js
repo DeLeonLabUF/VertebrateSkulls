@@ -11,7 +11,6 @@ const TARGET_NODE_NAMES = ["Mandible_forTeeth", "Maxilla", "Maxilla_forTeeth"];
 // Sketchfab API version
 const VERSION = "1.12.1";
 
-
 /* ====== MAIN INITIALIZATION ====== */
 
 function initializeSketchfab(uid, iframeId, modelName = "") {
@@ -41,60 +40,18 @@ function logAllNodes(api, modelName = "") {
     }
     console.group(`Nodes in model: ${modelName}`);
     Object.values(nodes).forEach((node) =>
-      console.log(`${node.name} (instanceID: ${node.instanceID}, parentID: ${node.parentID})`)
-    );
-    console.groupEnd();
-  });
-}
-
-function logMeshNodes(api, modelName = "") {
-  api.getNodeMap((err, nodes) => {
-    if (err) {
-      console.error("Error getting node map:", err);
-      return;
-    }
-
-    const nodeArray = Object.values(nodes);
-
-    // Filter nodes that have both a name and a geometry type
-    const meshNodes = nodeArray.filter(
-      (node) => node.type === "Geometry" && node.name
-    );
-
-    if (meshNodes.length === 0) {
-      console.warn(`⚠️ No mesh nodes found in model '${modelName}'.`);
-      return;
-    }
-
-    console.group(`🦴 Mesh Nodes in model: ${modelName}`);
-    meshNodes.forEach((node) =>
       console.log(
         `${node.name} (instanceID: ${node.instanceID}, parentID: ${node.parentID})`
       )
     );
     console.groupEnd();
-
-    console.log(
-      `✅ Found ${meshNodes.length} named mesh nodes (out of ${
-        nodeArray.length
-      } total nodes).`
-    );
   });
 }
 
-/* ====== SUCCESS HANDLER ====== */
-
-function success(api, iframeId, modelName) {
-  api.start();
-  api.addEventListener("viewerready", function () {
-    api.getNodeMap(function (err, nodes) {
-      if (err) {
-        console.error("Error getting node map:", err);
-        return;
-      }
-      
-      logAllNodes(api, modelName);
-
+/**
+ * Logs and returns mesh nodes (actual geometry) in the Sketchfab model.
+ * Ignores transforms, lights, and cameras.
+ */
 function logMeshNodes(api, modelName = "") {
   return new Promise((resolve) => {
     api.getNodeMap((err, nodes) => {
@@ -126,47 +83,71 @@ function logMeshNodes(api, modelName = "") {
       console.groupEnd();
 
       console.log(
-        `✅ Found ${meshNodes.length} named mesh nodes (out of ${nodeArray.length} total).`
+        `✅ Found ${meshNodes.length} named mesh nodes (out of ${
+          nodeArray.length
+        } total nodes).`
       );
 
       resolve(meshNodes); // Return the filtered list
     });
   });
 }
-      
-      // Convert nodes object to an array for easier filtering
-      const nodeArray = Object.values(nodes);
 
-      // Find all nodes whose names match any of the TARGET_NODE_NAMES
-      let hideshowNodes = nodeArray.filter((node) =>
-        TARGET_NODE_NAMES.includes(node.name)
-      );
+/* ====== SUCCESS HANDLER ====== */
 
-      // Fallback: if no matching nodes found, use root-like node
-      if (hideshowNodes.length === 0) {
-        // Try common root indicators
-        const rootNode =
-        nodeArray.find((node) => node.parentID === -1) ||
-        nodeArray.find((node) => node.parentID === null) ||
-        nodeArray[0]; // fallback to first node in the list
+function success(api, iframeId, modelName) {
+  api.start();
 
-    if (rootNode) {
-        console.warn(
-        `No target nodes (${TARGET_NODE_NAMES.join(
-          ", "
-          )}) found in model '${modelName}'. Using root node: ${rootNode?.name || "Unnamed root"}`
-        );
-      hideshowNodes = [rootNode];
-      } else {
-        console.error("No valid nodes found in model:", modelName);
-        return;
+  api.addEventListener("viewerready", function () {
+    // Wait briefly for the scene to fully populate before accessing node data
+    setTimeout(async () => {
+      // List and retrieve mesh nodes
+      const meshNodes = await logMeshNodes(api, modelName);
+      console.log("Mesh node names:", meshNodes.map((n) => n.name));
+
+      // Retrieve complete node map
+      api.getNodeMap(function (err, nodes) {
+        if (err) {
+          console.error("Error getting node map:", err);
+          return;
         }
-      }
 
-      // Add click event to toggle visibility for all found nodes
-      const nodeIDs = hideshowNodes.map((n) => n.instanceID);
-      addClickEvent(api, nodeIDs);
-    });
+        logAllNodes(api, modelName);
+
+        const nodeArray = Object.values(nodes);
+
+        // Find all nodes whose names match any of the TARGET_NODE_NAMES
+        let hideshowNodes = nodeArray.filter((node) =>
+          TARGET_NODE_NAMES.includes(node.name)
+        );
+
+        // Fallback: if no matching nodes found, use root-like node
+        if (hideshowNodes.length === 0) {
+          const rootNode =
+            nodeArray.find((node) => node.parentID === -1) ||
+            nodeArray.find((node) => node.parentID === null) ||
+            nodeArray[0]; // fallback to first node in the list
+
+          if (rootNode) {
+            console.warn(
+              `No target nodes (${TARGET_NODE_NAMES.join(
+                ", "
+              )}) found in model '${modelName}'. Using root node: ${
+                rootNode?.name || "Unnamed root"
+              }`
+            );
+            hideshowNodes = [rootNode];
+          } else {
+            console.error("No valid nodes found in model:", modelName);
+            return;
+          }
+        }
+
+        // Add click event to toggle visibility for all found nodes
+        const nodeIDs = hideshowNodes.map((n) => n.instanceID);
+        addClickEvent(api, nodeIDs);
+      });
+    }, 300); // delay for full initialization
   });
 }
 
@@ -194,7 +175,5 @@ function addClickEvent(api, nodeIDs) {
 initializeSketchfab("6920446710f64de3a6621ac766255d16", "DWA-Aotus1_Teeth", "Aotus1");
 initializeSketchfab("9fb6cf5aac834deeac18c92e50cf9259", "Aotus107_Teeth", "Aotus107");
 initializeSketchfab("f5696596b5bc4338ba1b21a49ee1955e", "Aotus108_Teeth", "Aotus108");
-
-
 
 // Author: Valerie Burke DeLeon using codepen.io; I am grateful to the Sketchfab Developer Team and the video tutorial by Klaas Nienhuis (https://www.klaasnienhuis.nl) on YouTube (https://www.youtube.com/live/mVQNDCwbXMM)!
