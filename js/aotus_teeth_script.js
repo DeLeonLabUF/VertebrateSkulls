@@ -26,7 +26,7 @@ function success(api, iframeId, modelName) {
           // console.log(nodes);
           // hideshow is the variable created to store the piece gets toggled
           // Replace the name for other models
-          const hideshow = Object.values(nodes).find((node) => node.name === "Calotte");
+          const hideshow = Object.values(nodes).find((node) => node.name === "");
           console.log(hideshow);
           addClickEvent(api, hideshow.instanceID);
         });
