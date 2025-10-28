@@ -46,6 +46,42 @@ function logAllNodes(api, modelName = "") {
     console.groupEnd();
   });
 }
+
+function logMeshNodes(api, modelName = "") {
+  api.getNodeMap((err, nodes) => {
+    if (err) {
+      console.error("Error getting node map:", err);
+      return;
+    }
+
+    const nodeArray = Object.values(nodes);
+
+    // Filter nodes that have both a name and a geometry type
+    const meshNodes = nodeArray.filter(
+      (node) => node.type === "Geometry" && node.name
+    );
+
+    if (meshNodes.length === 0) {
+      console.warn(`⚠️ No mesh nodes found in model '${modelName}'.`);
+      return;
+    }
+
+    console.group(`🦴 Mesh Nodes in model: ${modelName}`);
+    meshNodes.forEach((node) =>
+      console.log(
+        `${node.name} (instanceID: ${node.instanceID}, parentID: ${node.parentID})`
+      )
+    );
+    console.groupEnd();
+
+    console.log(
+      `✅ Found ${meshNodes.length} named mesh nodes (out of ${
+        nodeArray.length
+      } total nodes).`
+    );
+  });
+}
+
 /* ====== SUCCESS HANDLER ====== */
 
 function success(api, iframeId, modelName) {
@@ -58,6 +94,45 @@ function success(api, iframeId, modelName) {
       }
       
       logAllNodes(api, modelName);
+
+function logMeshNodes(api, modelName = "") {
+  return new Promise((resolve) => {
+    api.getNodeMap((err, nodes) => {
+      if (err) {
+        console.error("Error getting node map:", err);
+        resolve([]); // Return empty array on error
+        return;
+      }
+
+      const nodeArray = Object.values(nodes);
+
+      // Keep only named geometry nodes
+      const meshNodes = nodeArray.filter(
+        (node) => node.type === "Geometry" && node.name
+      );
+
+      if (meshNodes.length === 0) {
+        console.warn(`⚠️ No mesh nodes found in model '${modelName}'.`);
+        resolve([]); // Return empty array if none
+        return;
+      }
+
+      console.group(`🦴 Mesh Nodes in model: ${modelName}`);
+      meshNodes.forEach((node) =>
+        console.log(
+          `${node.name} (instanceID: ${node.instanceID}, parentID: ${node.parentID})`
+        )
+      );
+      console.groupEnd();
+
+      console.log(
+        `✅ Found ${meshNodes.length} named mesh nodes (out of ${nodeArray.length} total).`
+      );
+
+      resolve(meshNodes); // Return the filtered list
+    });
+  });
+}
       
       // Convert nodes object to an array for easier filtering
       const nodeArray = Object.values(nodes);
