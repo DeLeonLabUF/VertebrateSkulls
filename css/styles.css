@@ -148,15 +148,24 @@ header {
 
 .component-content {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;   /* ensure side-by-side layout */
+  flex-wrap: nowrap;     /* prevent wrapping */
   align-items: flex-start;
   gap: 1em;
+  box-sizing: border-box;
+}
+
+.component-content > .text,
+.component-content > .media {
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  min-width: 0;          /* critical: allows shrinking */
 }
 
 /* Text and media halves */
 .text, .media {
   flex: 1 1 50%;
-  min-width: 300px;
+  min-width: 0;
 }
 
 .media img,
