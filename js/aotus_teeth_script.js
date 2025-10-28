@@ -23,29 +23,41 @@ function success(api, iframeId, modelName) {
     api.addEventListener("viewerready", function () {
         // List objects
         api.getNodeMap(function (err, nodes) {
-          // console.log(nodes);
-          // hideshow is the variable created to store the piece gets toggled
-          // Replace the name for other models
-          const hideshow = Object.values(nodes).find((node) => node.name === "");
-          console.log(hideshow);
-          addClickEvent(api, hideshow.instanceID);
-        });
+            if (err) {
+            console.error("Error getting node map:", err);
+            return;
+              }
+
+      // Try to find the named node first
+      let hideshow = Object.values(nodes).find((node) => node.name === "Calotte");
+
+      // If not found, fall back to the root node (usually the first in the list)
+      if (!hideshow) {
+        hideshow = Object.values(nodes).find((node) => node.parentID === -1);
+        console.warn("Target node 'Calotte' not found. Using root node:", hideshow.name);
+      }
+
+      if (!hideshow) {
+        console.error("No valid node found to toggle visibility.");
+        return;
+      }
+
+      addClickEvent(api, hideshow.instanceID);
     });
+  });
 }
 
 
 //Define a function on click
-const addClickEvent = (api, hideshow, iframeID) => {
-  // Perform an action whenever the iframe is clicked
+const addClickEvent = (api, hideshowID) => {
   let isVisible = true;
   api.addEventListener(
     "click",
     function (info) {
-      // show or hide an object
-      if (isVisible === true) {
-        api.hide(hideshow);
+      if (isVisible) {
+        api.hide(hideshowID);
       } else {
-        api.show(hideshow);
+        api.show(hideshowID);
       }
       isVisible = !isVisible;
     },
