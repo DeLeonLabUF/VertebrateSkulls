@@ -150,47 +150,43 @@ function addClickEvent(api, nodeIDs) {
   // 0 = fully visible, 1 = semi-transparent, 2 = hidden
   let visibilityState = 0;
 
-  api.addEventListener(
-    "click",
-    function () {
-      // Step 1: Fully visible → semi-transparent
-      if (visibilityState === 0) {
-        nodeIDs.forEach((id) => {
-          // Reduce opacity
-          api.setNodeMaterial(
-            id,
-            { opacity: 0.1, transparent: true },
-            function (err) {
-              if (err) console.error("Error setting transparency:", err);
-            }
-          );
-        });
-        visibilityState = 1;
-      }
+  // First, get all materials once the model is ready
+  api.getMaterialList(function (err, materials) {
+    if (err) {
+      console.error("Error getting material list:", err);
+      return;
+    }
 
-      // Step 2: Semi-transparent → hidden
-      else if (visibilityState === 1) {
-        nodeIDs.forEach((id) => api.hide(id));
-        visibilityState = 2;
-      }
+    api.addEventListener(
+      "click",
+      function (info) {
+        // Skip clicks that don't hit geometry
+        if (!info || !info.instanceID) return;
 
-      // Step 3: Hidden → fully visible
-      else {
-        nodeIDs.forEach((id) => {
-          api.show(id);
-          api.setNodeMaterial(
-            id,
-            { opacity: 1.0, transparent: false },
-            function (err) {
-              if (err) console.error("Error restoring material:", err);
-            }
-          );
-        });
-        visibilityState = 0;
-      }
-    },
-    { pick: "fast" }
-  );
+        // Step 1 → 2 → 3 toggle
+        if (visibilityState === 0) {
+          materials.forEach((mat) => {
+            mat.opacity = 0.1;
+            mat.transparent = true;
+            api.setMaterial(mat);
+          });
+          visibilityState = 1;
+        } else if (visibilityState === 1) {
+          nodeIDs.forEach((id) => api.hide(id));
+          visibilityState = 2;
+        } else {
+          nodeIDs.forEach((id) => api.show(id));
+          materials.forEach((mat) => {
+            mat.opacity = 1.0;
+            mat.transparent = false;
+            api.setMaterial(mat);
+          });
+          visibilityState = 0;
+        }
+      },
+      { pick: "slow" } // slow = accurate per-vertex picking
+    );
+  });
 }
 
 
