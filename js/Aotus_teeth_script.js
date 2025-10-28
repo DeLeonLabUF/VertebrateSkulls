@@ -150,7 +150,6 @@ function addClickEvent(api, nodeIDs) {
   // 0 = fully visible, 1 = semi-transparent, 2 = hidden
   let visibilityState = 0;
 
-  // First, get all materials once the model is ready
   api.getMaterialList(function (err, materials) {
     if (err) {
       console.error("Error getting material list:", err);
@@ -160,31 +159,39 @@ function addClickEvent(api, nodeIDs) {
     api.addEventListener(
       "click",
       function (info) {
-        // Skip clicks that don't hit geometry
         if (!info || !info.instanceID) return;
 
-        // Step 1 → 2 → 3 toggle
+        // Step 1️⃣ → make semi-transparent
         if (visibilityState === 0) {
           materials.forEach((mat) => {
-            mat.opacity = 0.1;
-            mat.transparent = true;
+            mat.opacity = 0.1;              // 10 % visible
+            mat.transparent = true;         // enable alpha blending
+            mat.blending = "BLENDING_NORMAL";
+            mat.depthWrite = false;         // prevent z-fighting
             api.setMaterial(mat);
           });
           visibilityState = 1;
-        } else if (visibilityState === 1) {
+        }
+
+        // Step 2️⃣ → hide completely
+        else if (visibilityState === 1) {
           nodeIDs.forEach((id) => api.hide(id));
           visibilityState = 2;
-        } else {
+        }
+
+        // Step 3️⃣ → restore full opacity
+        else {
           nodeIDs.forEach((id) => api.show(id));
           materials.forEach((mat) => {
             mat.opacity = 1.0;
             mat.transparent = false;
+            mat.depthWrite = true;
             api.setMaterial(mat);
           });
           visibilityState = 0;
         }
       },
-      { pick: "slow" } // slow = accurate per-vertex picking
+      { pick: "slow" }
     );
   });
 }
