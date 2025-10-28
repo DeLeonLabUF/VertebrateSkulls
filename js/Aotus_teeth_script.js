@@ -50,19 +50,24 @@ function success(api, iframeId, modelName) {
         TARGET_NODE_NAMES.includes(node.name)
       );
 
-      // Fallback: if no matching nodes found, use root node (parentID = -1)
+      // Fallback: if no matching nodes found, use root-like node
       if (hideshowNodes.length === 0) {
-        const rootNode = nodeArray.find((node) => node.parentID === -1);
-        if (rootNode) {
-          console.warn(
-            `No target nodes (${TARGET_NODE_NAMES.join(
-              ", "
-            )}) found in model '${modelName}'. Using root node: ${rootNode.name}`
-          );
-          hideshowNodes = [rootNode];
-        } else {
-          console.error("No valid nodes found in model:", modelName);
-          return;
+        // Try common root indicators
+        const rootNode =
+        nodeArray.find((node) => node.parentID === -1) ||
+        nodeArray.find((node) => node.parentID === null) ||
+        nodeArray[0]; // fallback to first node in the list
+
+    if (rootNode) {
+        console.warn(
+        `No target nodes (${TARGET_NODE_NAMES.join(
+          ", "
+          )}) found in model '${modelName}'. Using root node: ${rootNode?.name || "Unnamed root"}`
+        );
+      hideshowNodes = [rootNode];
+      } else {
+        console.error("No valid nodes found in model:", modelName);
+        return;
         }
       }
 
