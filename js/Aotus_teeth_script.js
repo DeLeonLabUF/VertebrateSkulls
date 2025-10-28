@@ -5,7 +5,7 @@
 /* ====== CONFIGURATION ====== */
 
 // Editable list of node names to toggle
-const TARGET_NODE_NAMES = ["Mandible_forTeeth", "Maxilla", "Maxilla_forTeeth"];
+const TARGET_NODE_NAMES = ["Mandible_forTeeth", "Mandible", "Maxilla", "Maxilla_forTeeth"];
 
 // Sketchfab API version
 const VERSION = "1.12.1";
