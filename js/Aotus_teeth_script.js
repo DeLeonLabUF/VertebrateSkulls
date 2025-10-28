@@ -90,6 +90,7 @@ function logMeshNodes(api, modelName = "") {
 
 function success(api, iframeId, modelName) {
   api.start();
+  window.api = api;
 
   api.addEventListener("viewerready", function () {
     // Wait briefly for the scene to fully populate before accessing node data
