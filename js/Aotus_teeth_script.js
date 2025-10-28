@@ -6,7 +6,7 @@
 
 // List of node names to control in each model.
 // Add or remove names here as needed.
-const TARGET_NODE_NAMES = ["Mandible", "CranialBase"];
+const TARGET_NODE_NAMES = ["Mandible", "Maxilla"];
 
 // Sketchfab API version
 const VERSION = "1.12.1";
