@@ -158,42 +158,29 @@ function addClickEvent(api, nodeIDs, modelName) {
 }
 
 
-/* ====== OPACITY CONTROL (Smooth Fade) ====== */
+/* ====== OPACITY CONTROL ====== */
 
-function setMaterialOpacity(api, targetValue, duration = 1000) {
+function setMaterialOpacity(api, value) {
   api.getMaterialList((err, mats) => {
     if (err) return console.error("Error getting materials:", err);
 
-    // Only modify target materials
-    const targets = mats.filter((mat) =>
-      TARGET_NODE_NAMES.some((name) => mat.name?.includes(name))
-    );
-
-    // Gradually interpolate opacity
-    const steps = 30; // number of small updates (smoother = more steps)
-    const interval = duration / steps;
-
-    targets.forEach((mat) => {
-      if (mat.channels?.Opacity) {
-        mat.channels.Opacity.enable = true;
-        mat.transparent = true;
-
-        const startValue = mat.channels.Opacity.factor ?? 1.0;
-        const delta = targetValue - startValue;
-        let i = 0;
-
-        const fade = setInterval(() => {
-          i++;
-          const newValue = startValue + (delta * i) / steps;
-          mat.channels.Opacity.factor = newValue;
+    mats.forEach((mat) => {
+      // Apply opacity ONLY to target materials
+      if (TARGET_NODE_NAMES.includes(mat.name)) {
+        if (mat.channels?.Opacity) {
+          mat.channels.Opacity.enable = true;
+          mat.channels.Opacity.factor = value;
+          mat.transparent = true;
           api.setMaterial(mat);
-
-          if (i >= steps) clearInterval(fade);
-        }, interval);
+          console.log(`🎨 Set ${mat.name} opacity to ${value}`);
+        } else {
+          console.warn(`⚠️ ${mat.name} has no Opacity channel`);
+        }
       }
     });
   });
 }
+
 
 /* ====== MODEL INITIALIZATIONS ====== */
 
