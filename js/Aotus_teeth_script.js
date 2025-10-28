@@ -164,15 +164,17 @@ function setMaterialOpacity(api, value) {
     if (err) return console.error("Error getting materials:", err);
 
     mats.forEach((mat) => {
-      // Skip system/root materials if present
-      if (mat.name === "Scene - Root") return;
-
-      // Ensure transparency is enabled before applying
-      if (mat.channels?.Opacity) {
-        mat.channels.Opacity.enable = true;
-        mat.channels.Opacity.factor = value;
-        mat.transparent = true;
-        api.setMaterial(mat);
+      // Apply opacity ONLY to target materials
+      if (TARGET_NODE_NAMES.includes(mat.name)) {
+        if (mat.channels?.Opacity) {
+          mat.channels.Opacity.enable = true;
+          mat.channels.Opacity.factor = value;
+          mat.transparent = true;
+          api.setMaterial(mat);
+          console.log(`🎨 Set ${mat.name} opacity to ${value}`);
+        } else {
+          console.warn(`⚠️ ${mat.name} has no Opacity channel`);
+        }
       }
     });
   });
