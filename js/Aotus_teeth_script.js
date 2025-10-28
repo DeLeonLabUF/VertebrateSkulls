@@ -147,21 +147,52 @@ function success(api, iframeId, modelName) {
 /* ====== CLICK HANDLER ====== */
 
 function addClickEvent(api, nodeIDs) {
-  let isVisible = true;
+  // 0 = fully visible, 1 = semi-transparent, 2 = hidden
+  let visibilityState = 0;
 
   api.addEventListener(
     "click",
     function () {
-      if (isVisible) {
-        nodeIDs.forEach((id) => api.hide(id));
-      } else {
-        nodeIDs.forEach((id) => api.show(id));
+      // Step 1: Fully visible → semi-transparent
+      if (visibilityState === 0) {
+        nodeIDs.forEach((id) => {
+          // Reduce opacity
+          api.setNodeMaterial(
+            id,
+            { opacity: 0.1, transparent: true },
+            function (err) {
+              if (err) console.error("Error setting transparency:", err);
+            }
+          );
+        });
+        visibilityState = 1;
       }
-      isVisible = !isVisible;
+
+      // Step 2: Semi-transparent → hidden
+      else if (visibilityState === 1) {
+        nodeIDs.forEach((id) => api.hide(id));
+        visibilityState = 2;
+      }
+
+      // Step 3: Hidden → fully visible
+      else {
+        nodeIDs.forEach((id) => {
+          api.show(id);
+          api.setNodeMaterial(
+            id,
+            { opacity: 1.0, transparent: false },
+            function (err) {
+              if (err) console.error("Error restoring material:", err);
+            }
+          );
+        });
+        visibilityState = 0;
+      }
     },
     { pick: "fast" }
   );
 }
+
 
 /* ====== MODEL INITIALIZATIONS ====== */
 
