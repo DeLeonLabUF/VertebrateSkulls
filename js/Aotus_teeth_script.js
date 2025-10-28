@@ -24,9 +24,13 @@ function initializeSketchfab(uid, iframeId, modelName = "") {
     error: function (error) {
       console.error("Sketchfab API error:", error);
     },
-    ui_stop: 0,
-    preload: 1,
+
+    // These options affect scene optimization:
+    preload: 0,        // Load full material list; prevents scene baking
+    ui_stop: 0,        // Keep UI hidden but don’t strip features
     camera: 0,
+    ui_infos: 0,
+    ui_controls: 0
   });
 }
 
