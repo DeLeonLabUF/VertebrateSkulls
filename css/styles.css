@@ -310,8 +310,8 @@ Callout Section
   position: relative;
   background-color: #0a0a0a;
   border-radius: 10px;
-  padding: 2rem;
-  margin: 3rem 0;
+  padding: 2rem 2rem 2rem 3rem;   /* extra left padding to match offset border */
+  margin: 1rem 0;
   text-align: left;
   box-shadow: 0 0 10px rgba(214, 183, 90, 0.15);
 }
@@ -320,8 +320,8 @@ Callout Section
 .callout-goldbanner::before {
   content: "";
   position: absolute;
-  top: 0.5rem;
-  left: 0.8rem;                   /* ← adjust this to fine-tune horizontal offset */
+  top: 2rem;                    /* vertical offset */
+  left: 1.5rem;                   /* horizontal offset */
   right: 0;
   bottom: 0;
   border: 2px solid #d6b75a;
@@ -329,7 +329,7 @@ Callout Section
   pointer-events: none;
 }
 
-/* Gold banner heading */
+/* Gold banner heading with rounded lower corners */
 .callout-goldbanner h2 {
   display: inline-block;
   background-color: #d6b75a;
@@ -337,24 +337,31 @@ Callout Section
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   font-weight: 700;
-  margin: 0 0 1rem 0;
-  padding: 0.5rem 1rem;
-  border-radius: 10px 10px 0 0;
+  margin: 0 0 0rem 0;
+  padding: 0.6rem 1.4rem 0.7rem 1.4rem;
+  border-radius: 10px 10px 10px 10px;  /* ✅ fully rounded edges */
   position: relative;
-  z-index: 1;                     /* keep above border */
+  z-index: 1;
+  left: -3rem;
+  top: -1rem
 }
 
-/* Paragraph text */
-.callout-goldbanner p {
-  color: #ccc;
-  font-family: 'Lato', sans-serif;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+/* Paragraph and link text offset right for alignment */
+.callout-goldbanner p,
+.callout-goldbanner .callout-link {
+  margin-left: 0.8rem;         
   position: relative;
   z-index: 1;
 }
 
-/* Link styling */
+.callout-goldbanner p {
+  color: #ccc;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+}
+
 .callout-goldbanner .callout-link {
   color: #b78dfc;
   font-family: 'Lato', sans-serif;
@@ -362,8 +369,6 @@ Callout Section
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: color 0.3s ease, border-color 0.3s ease;
-  position: relative;
-  z-index: 1;
 }
 
 .callout-goldbanner .callout-link:hover {
