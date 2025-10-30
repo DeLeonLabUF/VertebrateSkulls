@@ -66,8 +66,10 @@ header {
 /* ----- Sidebar Navigation ----- */
 .navigation {
   position: sticky;
-  top: 80px;                         /* sits below header */
-  width: 220px;                      /* fixed, reliable width */
+  top: 80px;
+  min-width: 240px;        
+  width: 15vw;    
+  max-width: 280px;        
   flex-shrink: 0;
   height: calc(100vh - 80px);
   overflow-y: auto;
@@ -76,6 +78,7 @@ header {
   border-right: 2px solid #444;
   box-sizing: border-box;
 }
+
 .navigation ul {
   list-style: none;
   margin: 0;
@@ -254,6 +257,55 @@ Callout Section
   color: #b78dfc;                        /* SkeletalGrowth purple accent */
   border-color: #b78dfc;
 }
+
+.accent-style {
+  display: flex;
+  align-items: flex-start;
+  background: #0a0a0a;
+  margin: 3rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #1a1a1a;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.accent-style .accent-bar {
+  width: 8px;
+  background: linear-gradient(to bottom, #d6b75a, #b78dfc);
+}
+
+.accent-style .content {
+  padding: 1.5rem 2rem;
+  text-align: left;
+}
+
+.accent-style h2 {
+  font-family: 'Playfair Display', serif;
+  color: #ffffff;
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.accent-style p {
+  font-family: 'Lato', sans-serif;
+  color: #cccccc;
+  margin-bottom: 0.8rem;
+}
+
+.accent-style .callout-link {
+  color: #d6b75a;
+  font-family: 'Lato', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.accent-style .callout-link:hover {
+  color: #b78dfc;
+  border-color: #b78dfc;
+}
+
 
 
 /* ============================
