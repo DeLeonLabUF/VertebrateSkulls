@@ -307,17 +307,29 @@ Callout Section
 }
 
 .callout-goldbanner {
+  position: relative;
   background-color: #0a0a0a;
-  border: 2px solid #d6b75a;
   border-radius: 10px;
   padding: 2rem;
   margin: 3rem 0;
   text-align: left;
   box-shadow: 0 0 10px rgba(214, 183, 90, 0.15);
-  position: relative;
 }
 
-/* gold rounded banner behind heading */
+/* Gold border offset to the right */
+.callout-goldbanner::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: 0.8rem;                   /* ← adjust this to fine-tune horizontal offset */
+  right: 0;
+  bottom: 0;
+  border: 2px solid #d6b75a;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+/* Gold banner heading */
 .callout-goldbanner h2 {
   display: inline-block;
   background-color: #d6b75a;
@@ -325,30 +337,38 @@ Callout Section
   font-family: 'Playfair Display', serif;
   font-size: 1.6rem;
   font-weight: 700;
-  margin: -2.2rem 0 1rem 0;
+  margin: 0 0 1rem 0;
   padding: 0.5rem 1rem;
   border-radius: 10px 10px 0 0;
   position: relative;
-  top: 1rem;
+  z-index: 1;                     /* keep above border */
 }
 
+/* Paragraph text */
 .callout-goldbanner p {
   color: #ccc;
   font-family: 'Lato', sans-serif;
   font-size: 1rem;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
-/* link: SkeletalGrowth purple */
+/* Link styling */
 .callout-goldbanner .callout-link {
   color: #b78dfc;
+  font-family: 'Lato', sans-serif;
   font-weight: 600;
   text-decoration: none;
+  border-bottom: 1px solid transparent;
   transition: color 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .callout-goldbanner .callout-link:hover {
   color: #d6b75a;
+  border-color: #d6b75a;
 }
 
 /* ============================
