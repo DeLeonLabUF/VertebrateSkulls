@@ -208,40 +208,41 @@ header {
 Callout Section
 ============================ */
 .callout-section {
-  background-color: #000;           /* matches SkeletalGrowth dark theme */
-  border: 1px solid #d6b75a;        /* gold outline */
-  border-radius: 8px;
-  padding: 1.5rem 2rem;
+  background-color: #0a0a0a;              /* slightly lighter black for contrast */
+  border: 1px solid #d6b75a;              /* SkeletalGrowth gold */
+  border-radius: 10px;
+  padding: 2rem;
   margin-top: 3rem;
   text-align: center;
-  box-shadow: 0 0 10px rgba(214, 183, 90, 0.2);
-  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(214, 183, 90, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .callout-section:hover {
-  box-shadow: 0 0 20px rgba(214, 183, 90, 0.4);
-  transform: translateY(-3px);
+  box-shadow: 0 0 18px rgba(214, 183, 90, 0.25);
+  transform: translateY(-2px);
 }
 
 /* Heading */
 .callout-section h2 {
-  font-family: 'Orbitron', sans-serif; 
-  color: #fff;
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif; /* elegant & authoritative */
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.3px;
 }
 
 /* Subheading */
 .callout-section p {
+  font-family: 'Lato', sans-serif;       /* modern and readable */
   color: #ccc;
   font-size: 1rem;
   margin-bottom: 1rem;
-  font-family: 'Open Sans', sans-serif;
 }
 
 /* Link */
 .callout-link {
+  font-family: 'Lato', sans-serif;
   color: #d6b75a;
   font-weight: 600;
   text-decoration: none;
@@ -250,8 +251,8 @@ Callout Section
 }
 
 .callout-link:hover {
-  color: #c592ff;                      /* SkeletalGrowth purple accent */
-  border-color: #c592ff;
+  color: #b78dfc;                        /* SkeletalGrowth purple accent */
+  border-color: #b78dfc;
 }
 
 
