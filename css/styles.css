@@ -204,6 +204,55 @@ header {
   }
 }
 
+/* ============================
+Callout Section
+============================ */
+.callout-section {
+  background-color: #000;           /* matches SkeletalGrowth dark theme */
+  border: 1px solid #d6b75a;        /* gold outline */
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  margin-top: 3rem;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(214, 183, 90, 0.2);
+  transition: all 0.3s ease;
+}
+
+.callout-section:hover {
+  box-shadow: 0 0 20px rgba(214, 183, 90, 0.4);
+  transform: translateY(-3px);
+}
+
+/* Heading */
+.callout-section h2 {
+  font-family: 'Orbitron', sans-serif; 
+  color: #fff;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+/* Subheading */
+.callout-section p {
+  color: #ccc;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Link */
+.callout-link {
+  color: #d6b75a;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.callout-link:hover {
+  color: #c592ff;                      /* SkeletalGrowth purple accent */
+  border-color: #c592ff;
+}
 
 
 /* ============================
