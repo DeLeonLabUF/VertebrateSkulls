@@ -306,7 +306,50 @@ Callout Section
   border-color: #b78dfc;
 }
 
+.callout-goldbanner {
+  background-color: #0a0a0a;
+  border: 2px solid #d6b75a;
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 3rem 0;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(214, 183, 90, 0.15);
+  position: relative;
+}
 
+/* gold rounded banner behind heading */
+.callout-goldbanner h2 {
+  display: inline-block;
+  background-color: #d6b75a;
+  color: #000;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: -2.2rem 0 1rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  top: 1rem;
+}
+
+.callout-goldbanner p {
+  color: #ccc;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* link: SkeletalGrowth purple */
+.callout-goldbanner .callout-link {
+  color: #b78dfc;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.callout-goldbanner .callout-link:hover {
+  color: #d6b75a;
+}
 
 /* ============================
    Minor Visual Touches
