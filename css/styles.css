@@ -1,14 +1,27 @@
+/* =========================================================
+   SkeletalGrowth Website Stylesheet
+   ---------------------------------------------------------
+   Fonts: Playfair Display (headings) + Lato (body)
+   Color palette: black background, gold (#d6b75a), purple (#b78dfc)
+   ========================================================= */
+
+/* Google Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Lato:wght@400;600&display=swap');
+
 /* ============================
    Global Styles
 ============================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: #000;
   color: #fff;
-  font-family: Arial, sans-serif;
-  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
 }
 
 /* ============================
@@ -19,37 +32,35 @@ header {
   color: #fff;
   padding: 10px 20px;
   border-bottom: 2px solid #555;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* Title + logo side by side */
 .header-row {
   display: flex;
-  justify-content: space-between;   /* text left, logo right */
-  align-items: center;              /* vertically align */
-  flex-wrap: wrap;                  /* stack nicely on small screens */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-/* Title block */
 .title h1 {
   margin: 0;
+  font-family: 'Playfair Display', serif;
   font-size: 1.6em;
 }
 
 .title h2 {
   margin: 0;
+  font-family: 'Lato', sans-serif;
   font-size: 1em;
   color: #ccc;
   font-weight: normal;
 }
 
-/* Logo control */
 .logo img {
   max-height: 60px;
-  height: auto;
-  width: auto;
   display: block;
 }
-
 
 /* ============================
    Page Layout (Sidebar + Main)
@@ -58,24 +69,22 @@ header {
   display: flex;
   flex-direction: row;
   width: 100%;
-  min-height: calc(100vh - 100px);   /* fills under header */
+  min-height: calc(100vh - 100px);
   align-items: flex-start;
-  box-sizing: border-box;
 }
 
-/* ----- Sidebar Navigation ----- */
+/* Sidebar Navigation */
 .navigation {
   position: sticky;
-  top: 80px;                         /* sits below header */
-  width: 220px;                      /* fixed, reliable width */
-  flex-shrink: 0;
+  top: 80px;
+  width: 220px;
   height: calc(100vh - 80px);
   overflow-y: auto;
   background-color: #222;
   padding: 15px;
   border-right: 2px solid #444;
-  box-sizing: border-box;
 }
+
 .navigation ul {
   list-style: none;
   margin: 0;
@@ -84,7 +93,6 @@ header {
 
 .navigation li {
   margin-bottom: 8px;
-  position: relative;
 }
 
 .navigation a {
@@ -96,7 +104,7 @@ header {
   padding: 6px 10px;
   border-radius: 4px;
   transition: background 0.3s;
-  white-space: nowrap;          /* prevents wrapping onto multiple lines */
+  white-space: nowrap;
 }
 
 .navigation a:hover,
@@ -104,9 +112,9 @@ header {
   background-color: #777;
 }
 
-/* ----- Submenu Styles ----- */
+/* Submenu Styles */
 .navigation ul.submenu {
-  display: none;                /* hidden by default */
+  display: none;
   margin-left: 10px;
   margin-top: 5px;
   border-left: 2px solid #444;
@@ -114,7 +122,7 @@ header {
 }
 
 .navigation li:hover > ul.submenu {
-  display: block;               /* show on hover */
+  display: block;
 }
 
 .navigation ul.submenu a {
@@ -129,14 +137,12 @@ header {
   color: #fff;
 }
 
-/* ----- Main Content Area ----- */
+/* Main Content */
 .main-content {
   flex: 1 1 auto;
-  min-width: 0;                  /* 🔑 allows flex children to shrink */
+  min-width: 0;
   padding: 20px;
-  box-sizing: border-box;
   overflow-y: auto;
-  background-color: #000;
 }
 
 /* ============================
@@ -148,22 +154,13 @@ header {
 
 .component-content {
   display: flex;
-  flex-direction: row;   /* ensure side-by-side layout */
-  flex-wrap: nowrap;     /* prevent wrapping */
+  flex-direction: row;
   align-items: flex-start;
   gap: 1em;
-  box-sizing: border-box;
 }
 
 .component-content > .text,
 .component-content > .media {
-  flex: 1 1 50%;
-  box-sizing: border-box;
-  min-width: 0;          /* critical: allows shrinking */
-}
-
-/* Text and media halves */
-.text, .media {
   flex: 1 1 50%;
   min-width: 0;
 }
@@ -172,11 +169,9 @@ header {
 .media iframe {
   width: 100%;
   aspect-ratio: 4 / 3;
-  height: auto;
   border-radius: 6px;
   border: 1px solid #888;
   display: block;
-  flex-shrink: 0;         /* prevents flex compression */
   object-fit: contain;
 }
 
@@ -187,7 +182,7 @@ header {
   margin-top: 0.5em;
 }
 
-/* Stack vertically on narrow screens */
+/* Responsive: Stack vertically on narrow screens */
 @media (max-width: 800px) {
   .container {
     flex-direction: column;
@@ -205,64 +200,67 @@ header {
 }
 
 /* ============================
-Callout Section
+   Callout Section (Accent Style)
 ============================ */
 .callout-section {
-  background-color: #0a0a0a;              /* slightly lighter black for contrast */
-  border: 1px solid #d6b75a;              /* SkeletalGrowth gold */
-  border-radius: 10px;
-  padding: 2rem;
-  margin-top: 3rem;
-  text-align: center;
-  box-shadow: 0 0 12px rgba(214, 183, 90, 0.15);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  background: #0a0a0a;
+  margin: 3rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #1a1a1a;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .callout-section:hover {
-  box-shadow: 0 0 18px rgba(214, 183, 90, 0.25);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 0 18px rgba(183, 141, 252, 0.2);
 }
 
-/* Heading */
+/* Accent Bar — Signature Gradient */
+.callout-section .accent-bar {
+  width: 8px;
+  background: linear-gradient(to bottom, #d6b75a, #b78dfc);
+}
+
+/* Text Content */
+.callout-section .content {
+  padding: 1.5rem 2rem;
+  text-align: left;
+}
+
 .callout-section h2 {
-  font-family: 'Playfair Display', serif; /* elegant & authoritative */
+  font-family: 'Playfair Display', serif;
   color: #ffffff;
-  font-size: 1.8rem;
-  margin-bottom: 0.6rem;
-  letter-spacing: 0.3px;
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
 }
 
-/* Subheading */
 .callout-section p {
-  font-family: 'Lato', sans-serif;       /* modern and readable */
-  color: #ccc;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  font-family: 'Lato', sans-serif;
+  color: #cccccc;
+  margin-bottom: 0.8rem;
 }
 
-/* Link */
-.callout-link {
-  font-family: 'Lato', sans-serif;
+.callout-section .callout-link {
   color: #d6b75a;
+  font-family: 'Lato', sans-serif;
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 1px solid transparent;
   transition: all 0.3s ease;
 }
 
-.callout-link:hover {
-  color: #b78dfc;                        /* SkeletalGrowth purple accent */
+.callout-section .callout-link:hover {
+  color: #b78dfc;
   border-color: #b78dfc;
 }
-
 
 /* ============================
    Minor Visual Touches
 ============================ */
 a {
   transition: color 0.3s, background-color 0.3s;
-}
-
-header {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
